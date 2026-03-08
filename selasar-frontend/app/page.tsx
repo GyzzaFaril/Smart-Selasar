@@ -8,14 +8,15 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function Home() {
-  const [seats, setSeats] = useState([]);
-  const [vendor, setVendor] = useState(null);
-  const [menus, setMenus] = useState([]);
+  // --- REVISI: Menambahkan <any[]> dan <any> agar TypeScript tidak rewel ---
+  const [seats, setSeats] = useState<any[]>([]);
+  const [vendor, setVendor] = useState<any>(null);
+  const [menus, setMenus] = useState<any[]>([]);
   
-  const [cart, setCart] = useState([]);
-  const [customerSeat, setCustomerSeat] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [activeOrder, setActiveOrder] = useState(null);
+  const [cart, setCart] = useState<any[]>([]);
+  const [customerSeat, setCustomerSeat] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [activeOrder, setActiveOrder] = useState<any>(null);
 
   useEffect(() => {
     fetchData();
@@ -38,7 +39,7 @@ export default function Home() {
         if (vendor && payload.new.id === vendor.id) setVendor(payload.new);
       })
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders' }, (payload) => {
-        setActiveOrder((prev) => {
+        setActiveOrder((prev: any) => {
           if (prev && prev.id === payload.new.id) return payload.new;
           return prev;
         });
@@ -47,7 +48,9 @@ export default function Home() {
 
     return () => {
       supabase.removeChannel(channel);
-      document.body.removeChild(script); 
+      if (document.body.contains(script)) {
+         document.body.removeChild(script); 
+      }
     };
   }, [vendor]);
 
@@ -63,7 +66,8 @@ export default function Home() {
     }
   }
 
-  const addToCart = (menuItem) => {
+  // --- REVISI: Menambahkan :any pada parameter ---
+  const addToCart = (menuItem: any) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === menuItem.id);
       if (existing) return prev.map((item) => item.id === menuItem.id ? { ...item, qty: item.qty + 1 } : item);
@@ -71,7 +75,7 @@ export default function Home() {
     });
   };
 
-  const removeFromCart = (menuId) => {
+  const removeFromCart = (menuId: any) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === menuId);
       if (existing.qty === 1) return prev.filter(item => item.id !== menuId);
@@ -107,15 +111,15 @@ export default function Home() {
 
       // @ts-ignore
       window.snap.pay(token, {
-        onSuccess: async function (result) {
+        onSuccess: async function (result: any) {
           console.log("Pembayaran Sukses!", result);
           saveOrderToDatabase(orderIdMidtrans, 'SUDAH DIBAYAR - PENDING');
         },
-        onPending: function (result) {
+        onPending: function (result: any) {
           alert("Pembayaran tertunda. Selesaikan pembayaran Anda.");
           setIsSubmitting(false);
         },
-        onError: function (result) {
+        onError: function (result: any) {
           alert("Pembayaran gagal!");
           setIsSubmitting(false);
         },
@@ -124,13 +128,13 @@ export default function Home() {
         }
       });
 
-    } catch (error) {
+    } catch (error: any) {
       alert("Terjadi kesalahan: " + error.message);
       setIsSubmitting(false);
     }
   };
 
-  const saveOrderToDatabase = async (paymentId, status) => {
+  const saveOrderToDatabase = async (paymentId: string, status: string) => {
     const { data, error } = await supabase.from('orders').insert({
       vendor_id: vendor.id,
       seat_code: customerSeat,
