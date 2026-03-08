@@ -22,7 +22,7 @@ export default function Home() {
 
     // --- SCRIPT MIDTRANS SNAP ---
     const snapScript = "https://app.sandbox.midtrans.com/snap/snap.js";
-    const clientKey = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY;
+    const clientKey = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY as string;
     const script = document.createElement("script");
     script.src = snapScript;
     script.setAttribute("data-client-key", clientKey);
