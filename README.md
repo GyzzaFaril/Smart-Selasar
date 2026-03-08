@@ -1,4 +1,5 @@
 # 🎓 Smart Selasar
+https://smart-selasar.vercel.app/
 
 **Smart Selasar** adalah aplikasi web modern untuk memfasilitasi pemesanan makanan dan pemantauan ketersediaan kursi kantin (selasar) secara *real-time*. Dibuat dengan antarmuka yang ramah pengguna, mahasiswa atau pengunjung dapat melihat kursi mana yang kosong, memesan makanan dari vendor yang buka, dan langsung membayar secara digital.
 
