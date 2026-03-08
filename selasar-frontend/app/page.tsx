@@ -216,13 +216,13 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
             <h2 className="text-2xl font-bold text-slate-800">🪑 Status Kursi Selasar</h2>
             
-            {/* Legend Modern */}
+            {/* --- REVISI: Legend Modern Diperbarui (Hijau vs Merah) --- */}
             <div className="flex gap-4 text-sm font-bold text-slate-600 bg-slate-50 py-2.5 px-5 rounded-full border border-slate-200">
               <span className="flex items-center gap-2">
-                <span className="w-3.5 h-3.5 bg-emerald-100 border-2 border-emerald-400 rounded-full"></span> Kosong
+                <span className="w-3.5 h-3.5 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span> Kosong
               </span>
               <span className="flex items-center gap-2">
-                <span className="w-3.5 h-3.5 bg-amber-400 rounded-full shadow-[0_0_8px_#fbbf24]"></span> Terisi
+                <span className="w-3.5 h-3.5 bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.5)]"></span> Terisi
               </span>
             </div>
           </div>
@@ -231,10 +231,11 @@ export default function Home() {
             {seats.map((seat) => (
               <div 
                 key={seat.id} 
+                // --- REVISI: ClassName CSS diubah (Merah tegas untuk terisi, Hijau estetik untuk kosong) ---
                 className={`flex items-center justify-center h-16 rounded-2xl font-black text-xl transition-all duration-300 ${
                   seat.is_occupied 
-                    ? 'bg-gradient-to-br from-amber-100 to-orange-100 border-2 border-amber-300 text-amber-800 shadow-[0_0_15px_rgba(251,191,36,0.3)] scale-105 z-10'
-                    : 'bg-white border-2 border-slate-100 text-slate-400 hover:border-emerald-300 hover:text-emerald-600 hover:bg-emerald-50'
+                    ? 'bg-red-500 border-2 border-red-600 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] scale-105 z-10 cursor-not-allowed'
+                    : 'bg-emerald-50 border-2 border-emerald-400 text-emerald-700 hover:bg-emerald-100 hover:border-emerald-500 hover:shadow-md'
                 }`}
               >
                 {seat.seat_code}

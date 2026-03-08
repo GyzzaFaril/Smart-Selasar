@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Kita paksa warna dasar ke light mode agar cocok dengan desainmu */
+  --background: #f8fafc; /* Warna slate-50 */
+  --foreground: #0f172a; /* Warna slate-900 */
 }
 
 @theme inline {
@@ -12,15 +13,29 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Blok @media (prefers-color-scheme: dark) DIHAPUS
+  supaya background tidak tiba-tiba jadi hitam 
+*/
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial DIHAPUS agar font 'Geist' dari layout.tsx bisa aktif! */
+}
+
+/* --- Tambahkan CSS Kustom untuk Animasi & Scrollbar dari Kodemu --- */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
 }
